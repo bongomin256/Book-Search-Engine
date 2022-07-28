@@ -57,9 +57,3 @@ Incase of any question[s] or suggestion[s] concerning this appication, please co
 ## Screenshots
 
 ![screenshot](./screenshot1.png)
-
-<!-- ![screenshot](./Develop/images/screenshot2.png) -->
-
-```
-
-```
