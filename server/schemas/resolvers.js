@@ -19,6 +19,7 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
+      console.log("uuser=====", user);
 
       if (!user) {
         throw new AuthenticationError("Something went wrong!");
