@@ -14,10 +14,10 @@ import { REMOVE_BOOK } from "../utils/mutations";
 
 // import { getMe, deleteBook } from '../utils/API';
 import Auth from "../utils/auth";
-import { removeBookId, saveBookIds } from "../utils/localStorage";
+import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
-  //using thte useQuery() hooks to execute GET_ME
+  //using the useQuery() hooks to execute GET_ME
   const { loading, data } = useQuery(GET_ME);
   const userData = data?.me || [];
 
@@ -32,7 +32,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await removeBook({ variable: { bookId }, token });
+      const response = await removeBook({ variable: { bookId } });
 
       if (!response.ok) {
         throw new Error("something went wrong!");
@@ -49,8 +49,8 @@ const SavedBooks = () => {
     return <h2>LOADING...</h2>;
   }
 
-  const savedBookIds = userData.savedBooks.map((book) => book.bookId);
-  saveBookIds(savedBookIds);
+  // const savedBookIds = userData.savedBooks.map((book) => book.bookId);
+  // saveBookIds(savedBookIds);
 
   return (
     <>

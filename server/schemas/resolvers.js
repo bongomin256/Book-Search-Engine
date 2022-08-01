@@ -29,13 +29,13 @@ const resolvers = {
     },
 
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email, password });
+      const user = await User.findOne({ email });
 
       if (!user) {
         throw new AuthenticationError("Can't find this user");
       }
 
-      const correctPw = await user.isCorrectPassword(body.password);
+      const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError("Wrong Password!");
@@ -45,11 +45,20 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (parent, { input }, context) => {
+    saveBook: async (
+      parent,
+      { bookId, authors, description, images, title, link },
+      context
+    ) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: body } },
+          // { $addToSet: { savedBooks: { input } } },
+          {
+            $addToSet: {
+              savedBooks: { bookId, authors, description, images, title, link },
+            },
+          },
           { new: true, runValidators: true }
         );
 
@@ -61,7 +70,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId: params.bookId } } },
+          { $pull: { savedBooks: { bookId } } },
           { new: true }
         );
         return updatedUser;
